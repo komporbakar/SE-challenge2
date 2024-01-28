@@ -32,7 +32,7 @@ module.exports = async (req: any, res: Response) => {
     );
     return res.status(StatusCodes.CREATED).json({
       success: true,
-      message: "Created Successfully",
+      message: "Add Comment Successfully",
       data: created[0],
     });
   } catch (error) {
