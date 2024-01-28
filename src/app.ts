@@ -11,11 +11,13 @@ app.use(cors());
 app.use(urlencoded({ extended: false }));
 
 const userRouter = require("./router/Users");
+const postRouter = require("./router/Posts");
 
 const version = "/api/v1";
 
 // API Users
 app.use(`${version}/users`, userRouter);
+app.use(`${version}/posts`, postRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
