@@ -1,4 +1,6 @@
-const createPost = require("./create");
+const createComment = require("./create");
+const deleteComment = require("./delete");
 module.exports = {
-  createPost,
+  createComment,
+  deleteComment,
 };
