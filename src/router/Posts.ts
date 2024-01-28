@@ -5,6 +5,7 @@ const {
   updatePost,
   deletePost,
   postGetById,
+  postGetAll,
 } = require("../controller/posts");
 const { authenticate } = require("../middlewares/authenticate");
 
@@ -14,6 +15,8 @@ router.post("/", authenticate, create);
 router.put("/:id", authenticate, updatePost);
 // Delete Post
 router.delete("/:id", authenticate, deletePost);
+// Get All Post
+router.get("/", postGetAll);
 // Get Detail Post
 router.get("/:id", postGetById);
 
