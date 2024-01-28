@@ -40,7 +40,7 @@ module.exports = async (req: any, res: Response) => {
     );
 
     return res.status(StatusCodes.OK).json({
-      success: false,
+      success: true,
       message: "Update Successfully",
       data: updatePost[0],
     });
