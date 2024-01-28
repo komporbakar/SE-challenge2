@@ -3,27 +3,32 @@ import { StatusCodes } from "http-status-codes";
 import moment from "moment";
 
 const { db } = require("../../services/postgresdb");
-interface Post {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-}
 
 module.exports = async (req: any, res: Response) => {
-  const { title, description, image }: Post = req.body;
+  const { comment, post_id } = req.body;
   const date = moment().format();
   try {
     const userId: Number = req.user.id;
-    if (!title || !description) {
+    if (!comment || !post_id) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         success: false,
         message: "Field cannot be empty",
       });
     }
+    const checkPost = await db.query("SELECT * FROM posts WHERE id = $1", [
+      post_id,
+    ]);
+    console.log(checkPost);
+    if (!checkPost[0] || checkPost.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Post Not Found",
+      });
+    }
+
     const created = await db.query(
-      "INSERT INTO posts (title, description, image, user_id, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id, title, description, image, user_id, created_at",
-      [title, description, image, userId, date]
+      "INSERT INTO comments (comment, post_id, user_id, created_at) VALUES ($1, $2, $3, $4) RETURNING id, comment, post_id, user_id, created_at",
+      [comment, post_id, userId, date]
     );
     return res.status(StatusCodes.CREATED).json({
       success: true,

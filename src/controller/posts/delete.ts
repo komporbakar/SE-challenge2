@@ -6,7 +6,7 @@ const { db } = require("../../services/postgresdb");
 module.exports = async (req: any, res: Response) => {
   const { id } = req.params;
   try {
-    const userId = req.user.id;
+    const userId: Number = req.user.id;
 
     const checkPost = await db.query("SELECT * FROM posts WHERE id = $1", [id]);
     console.log(checkPost);

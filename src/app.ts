@@ -12,12 +12,14 @@ app.use(urlencoded({ extended: false }));
 
 const userRouter = require("./router/Users");
 const postRouter = require("./router/Posts");
+const commentRouter = require("./router/Comments");
 
 const version = "/api/v1";
 
 // API Users
 app.use(`${version}/users`, userRouter);
 app.use(`${version}/posts`, postRouter);
+app.use(`${version}/comment`, commentRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
