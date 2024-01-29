@@ -16,7 +16,7 @@ router.put("/:id", authenticate, updatePost);
 // Delete Post
 router.delete("/:id", authenticate, deletePost);
 // Get All Post
-router.get("/", postGetAll);
+router.get("/", authenticate, postGetAll);
 // Get Detail Post
 router.get("/:id", postGetById);
 
