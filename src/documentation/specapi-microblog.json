@@ -1,0 +1,948 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "API Microblog",
+    "description": "Spec API for microblog",
+    "version": "1.0.0",
+    "termsOfService": "https://github.com/komporbakar",
+    "contact": {
+      "name": "Muhamad Arif Nurrohman",
+      "email": "arif.kobe@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "Microblog Restfull API",
+      "url": "http://{environment}/api/v1",
+      "variables": {
+        "environment": {
+          "description": "Server environment",
+          "default": "localhost:4011",
+          "enum": ["localhost:4011", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Registration successful"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed registration",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "field empty": {
+                    "value": {
+                      "success": false,
+                      "message": "Field cannot be empty"
+                    }
+                  },
+                  "email already": {
+                    "value": {
+                      "success": false,
+                      "message": "Email already registred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Login Successfully",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed registration",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Credential Not Match"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/users": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Update User",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Success",
+                  "data": {
+                    "id": 24,
+                    "name": "John Doe",
+                    "email": "johndoe@gmail.com",
+                    "image": null
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authenticate Failed ",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Get Detail User",
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Success",
+                  "data": {
+                    "id": 21,
+                    "name": "john.doe",
+                    "email": "john.doe@gmail.com",
+                    "image": null,
+                    "follower": "1"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authenticate Failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Posts"],
+        "summary": "Get All POST Following",
+        "responses": {
+          "200": {
+            "description": "Get ALl Post Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Success",
+                  "data": [
+                    {
+                      "id": 3,
+                      "title": "Post Ketiga",
+                      "description": "lorem ipmus seo nada",
+                      "post_image": null,
+                      "author": {
+                        "id": 24,
+                        "name": "Muhamad arif nurrohman",
+                        "image": null
+                      },
+                      "comments": []
+                    },
+                    {
+                      "id": 4,
+                      "title": "Post Pertama Update",
+                      "description": "lorem ipmus seo nada",
+                      "post_image": null,
+                      "author": {
+                        "id": 24,
+                        "name": "Muhamad arif nurrohman",
+                        "image": null
+                      },
+                      "comments": [
+                        {
+                          "comment_id": 13,
+                          "comment": "Kok bisa?",
+                          "user": {
+                            "id": 24,
+                            "name": "Muhamad arif nurrohman",
+                            "image": null
+                          },
+                          "created_at": "2024-01-29T04:09:01"
+                        },
+                        {
+                          "comment_id": 12,
+                          "comment": "Kok bisa?",
+                          "user": {
+                            "id": 25,
+                            "name": "admin",
+                            "image": null
+                          },
+                          "created_at": "2024-01-29T03:19:12"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed registration",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Posts"],
+        "summary": "Create New POST ",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUpdatePost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create New Post Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Created Successfully",
+                  "data": {
+                    "id": 5,
+                    "title": "Tweet Pertama Admin",
+                    "description": "lorem ipmus seo nada",
+                    "image": null,
+                    "user_id": 25,
+                    "created_at": "2024-01-28T19:03:50.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Create New Post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed Create New Post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Field is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/posts/{postId}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get Detail Post",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Detail POST Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Success",
+                  "data": {
+                    "id": 4,
+                    "title": "Tweet Pertama Update",
+                    "description": "lorem ipmus seo nada",
+                    "post_image": null,
+                    "author": {
+                      "id": 24,
+                      "name": "Muhamad arif nurrohman",
+                      "image": null
+                    },
+                    "comments": [
+                      {
+                        "comment_id": 14,
+                        "comment": "Kok bisa LOH?",
+                        "user": {
+                          "id": 24,
+                          "name": "Muhamad arif nurrohman",
+                          "image": null
+                        },
+                        "created_at": "2024-01-29T04:09:19"
+                      },
+                      {
+                        "comment_id": 12,
+                        "comment": "Kok bisa?",
+                        "user": {
+                          "id": 25,
+                          "name": "admin",
+                          "image": null
+                        },
+                        "created_at": "2024-01-29T03:19:12"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed GET POST By Id",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Posts"],
+        "summary": "Update Post ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUpdatePost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update Post Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Updated Successfully",
+                  "data": {
+                    "id": 4,
+                    "title": "Tweet Pertama Update",
+                    "description": "lorem ipmus seo nada",
+                    "image": null,
+                    "user_id": 24,
+                    "created_at": "2024-01-28T19:02:48.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Update Post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed Update Post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Field is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Posts"],
+        "summary": "Delete Post ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete Post Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Delete Successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Delete Post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comment": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Comment"],
+        "summary": "Create New Comment ",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create New Comment Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Add Comment Successfully",
+                  "data": {
+                    "id": 15,
+                    "comment": "Kok bisa LOH?",
+                    "post_id": 5,
+                    "user_id": 24,
+                    "created_at": "2024-01-28T21:09:23.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Field is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/comment/{commentId}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Comment"],
+        "summary": "Delete Comment ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/commentId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete Comment Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Delete Successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Delete Comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/follow": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Follows"],
+        "summary": "Follow Person",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "following_id": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "following_id": 5
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Add Following Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Follow Successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "can't follow my id": {
+                    "value": {
+                      "success": false,
+                      "message": "You Can't Follow Yourself"
+                    }
+                  },
+                  "field must be input": {
+                    "value": {
+                      "success": false,
+                      "message": "Field is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/users/unfollow": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Follows"],
+        "summary": "Unfollow Person",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "following_id": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "following_id": 5
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Add Following Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Follow Successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed Create New Comment",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "can't follow my id": {
+                    "value": {
+                      "success": false,
+                      "message": "You Can't Follow Yourself"
+                    }
+                  },
+                  "field must be input": {
+                    "value": {
+                      "success": false,
+                      "message": "Field is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/follows": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Follows"],
+        "summary": "Get Followers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Success",
+                  "data": [
+                    {
+                      "following_id": 24,
+                      "user": {
+                        "id": 20,
+                        "name": "arif",
+                        "image": null
+                      },
+                      "created_at": "2024-01-28T22:13:17.264Z"
+                    },
+                    {
+                      "following_id": 24,
+                      "user": {
+                        "id": 21,
+                        "name": "arif",
+                        "image": null
+                      },
+                      "created_at": "2024-01-28T22:51:00.798Z"
+                    },
+                    {
+                      "following_id": 24,
+                      "user": {
+                        "id": 25,
+                        "name": "admin",
+                        "image": null
+                      },
+                      "created_at": "2024-01-28T22:42:19.872Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed Get Data Followers",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Authentication Failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\""
+      }
+    },
+    "parameters": {
+      "postId": {
+        "name": "postId",
+        "in": "query",
+        "required": true,
+        "description": "Post ID",
+        "schema": {
+          "type": "number"
+        },
+        "example": 1
+      },
+      "commentId": {
+        "name": "commentId",
+        "in": "query",
+        "required": true,
+        "description": "Comment ID",
+        "schema": {
+          "type": "number"
+        },
+        "example": 1
+      }
+    },
+    "schemas": {
+      "Register": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUpdatePost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateCommentPost": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Website Arif Nurrohman",
+    "url": "https://marifnurrohman.com"
+  }
+}
