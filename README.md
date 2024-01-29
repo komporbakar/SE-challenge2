@@ -65,9 +65,9 @@ Happy Hacking! 🤘
 
 ## Personal Info
 
-Name: Muhamad Arif Nurrohman
-Email: arif.kobe@gmail.com
-No Hp: 081649627671
+- Name: Muhamad Arif Nurrohman
+- Email: arif.kobe@gmail.com
+- No Hp: 081649627671
 
 ## Instalation
 
@@ -93,6 +93,10 @@ No Hp: 081649627671
 
    - create database postgre sql microblog
    - create table users, posts, comments, and follows and field
+   - table users = id, name, email, password, image, created_at
+   - table posts = id, title, image, description, created_at, updated_at
+   - table comments = id, post_id, user_id, created_at
+   - table follows = follower_id, following_id, created_at
 
 5. Run Express Js
 
