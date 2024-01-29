@@ -89,9 +89,10 @@ No Hp: 081649627671
     npm install
 ```
 
-4. Setup Database
-   -create database postgre sql microblog
-   -create table users, posts, comments, and follows and field
+4. Setup Databas
+
+   - create database postgre sql microblog
+   - create table users, posts, comments, and follows and field
 
 5. Run Express Js
 
