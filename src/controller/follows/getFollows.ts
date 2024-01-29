@@ -7,7 +7,9 @@ module.exports = async (req: any, res: Response) => {
   const userId = req.user.id;
   try {
     const result = await db.query(
+
       "SELECT follows.following_id, json_build_object('id', users.id, 'name', users.name, 'image', users.image) AS user, follows.created_at FROM follows LEFT JOIN users ON users.id = follows.follower_id WHERE follows.following_id = $1",
+
       [userId]
     );
     return res.status(StatusCodes.OK).json({
