@@ -4,9 +4,16 @@ import moment from "moment";
 
 const { db } = require("../../services/postgresdb");
 
+interface Post {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
 module.exports = async (req: any, res: Response) => {
   const { id } = req.params;
-  const { title, description, image } = req.body;
+  const { title, description, image }: Post = req.body;
   const date = moment().format();
   try {
     const userId = req.user.id;
