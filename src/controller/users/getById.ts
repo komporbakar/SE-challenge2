@@ -7,7 +7,7 @@ module.exports = async (req: any, res: Response) => {
   console.log(id);
   try {
     const result = await db.query(
-      "SELECT id, name, email, image FROM users WHERE id = $1 ",
+      "SELECT users.id, users.name, users.email, users.image, COUNT(DISTINCT follows.follower_id) AS follower FROM users LEFT JOIN follows ON users.id = follows.following_id WHERE id = $1 GROUP BY users.id",
       [id]
     );
     console.log(result);
