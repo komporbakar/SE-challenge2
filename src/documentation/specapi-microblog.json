@@ -216,6 +216,11 @@
         ],
         "tags": ["Posts"],
         "summary": "Get All POST Following",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryPost"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Get ALl Post Success",
@@ -276,7 +281,7 @@
             }
           },
           "401": {
-            "description": "Failed registration",
+            "description": "Failed Get Data",
             "content": {
               "application/json": {
                 "example": {
@@ -872,6 +877,16 @@
           "type": "number"
         },
         "example": 1
+      },
+      "queryPost": {
+        "name": "queryPost",
+        "in": "q",
+        "required": false,
+        "description": "Query Post",
+        "schema": {
+          "type": "string"
+        },
+        "example": "admin"
       }
     },
     "schemas": {

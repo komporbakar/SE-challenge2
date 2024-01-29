@@ -62,3 +62,45 @@ Your submission will be evaluated based on the following criteria:
 - Be sure to notify us when it is submitted by sending us email through faizal@gapai.id with title format **[SE - Submission] - yourname** and send me the related link.
 
 Happy Hacking! 🤘
+
+## Personal Info
+
+Name: Muhamad Arif Nurrohman
+Email: arif.kobe@gmail.com
+No Hp: 081649627671
+
+## Instalation
+
+1. Clone this repo
+
+```bash
+    git clone https://github.com/komporbakar/SE-challenge2.git
+```
+
+2. Open this file
+
+```bash
+    cd SE-challenge2
+```
+
+3. Install NPM
+
+```bash
+    npm install
+```
+
+4. Setup Database
+   -create database postgre sql microblog
+   -create table users, posts, comments, and follows and field
+
+5. Run Express Js
+
+```bash
+    npm run start
+```
+
+6. Open Documentation
+
+```bash
+    http://localhost:4011/documentation
+```
