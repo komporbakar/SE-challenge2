@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  # Node.js Express Application
+  web:
+    image: node:18.7
+    container_name: express-app
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    ports:
+      - "4022:4011"
+    environment:
+      NODE_ENV: development
+    command: npm run start
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:latest
+    container_name: postges1
+    environment:
+      POSTGRES_DB: microblog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: arif
+    ports:
+      - "5434:5432"
